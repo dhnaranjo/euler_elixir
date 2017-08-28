@@ -13,12 +13,14 @@ defmodule Euler.P004 do
   def largest_palindrome(0, _, _, palindromes), do: Enum.max palindromes
   def largest_palindrome(a, b, max, palindromes) do
     product = a * b
-    if is_palindrome? product do
-      palindromes = palindromes ++ [product]
-    end
-      cond do
-        a == b -> largest_palindrome(a - 1, max, max, palindromes)
-        b > a -> largest_palindrome(a, b - 1, max, palindromes)
+    palindromes =
+      case is_palindrome? product do
+        true -> palindromes ++ [product]
+        false -> palindromes
+      end
+    cond do
+      a == b -> largest_palindrome(a - 1, max, max, palindromes)
+      b > a -> largest_palindrome(a, b - 1, max, palindromes)
     end
   end
 
